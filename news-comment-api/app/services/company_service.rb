@@ -5,57 +5,12 @@ module CompanyService
 
   module_function
 
-  def registerCompanyProfile(companyRegistParam, session)
+  def editCompanyProfile(companyRegistParam, session)
     begin
-      checkRegsiteredUser = User.where(_id: companyRegistParam[:user_id])
-      imageUrlForRegister = companyRegistParam[:image_file].nil? ? companyRegistParam[:image_url] : nil
-      imageFileNameForRegister = companyRegistParam[:image_file].nil? ? nil : GoogleCloudStorageUtil::updateImageFile(companyRegistParam[:image_file], companyRegistParam[:user_id], nil)
-      # userの情報は事前にチェック
-      if checkRegsiteredUser.length == 1 &&
-         UserService::preCheckRegister(checkRegsiteredUser[0].status, companyRegistParam[:password], companyRegistParam[:email])
-        # user情報の更新
-        updateUser = checkRegsiteredUser[0]
-        if updateUser.update(
-          status: UserConstants::STATUS_ACTIVE,
-          email: companyRegistParam[:email],
-          password: companyRegistParam[:password],
-          image_url: imageUrlForRegister,
-          image_file_name: imageFileNameForRegister,
-          company_profile: {
-            company_name: companyRegistParam[:company_name],
-            category: companyRegistParam[:category],
-            prefecture_code: companyRegistParam[:prefecture_code],
-            url: companyRegistParam[:url],
-            detail: companyRegistParam[:detail]
-          }
-        )
-          getCompanyResponse(
-            companyRegistParam[:user_id],
-            companyRegistParam[:company_name],
-            updateUser.role,
-            imageFileNameForRegister.nil? ? imageUrlForRegister : GoogleCloudStorageUtil::getImageUrl(imageFileNameForRegister, nil),
-            session,
-            nil,
-            nil,
-            nil,
-            nil
-          )
-        else
-          { status: ResponseConstants::HTTP_STATUS_400 }
-        end
-      else
-        { status: ResponseConstants::HTTP_STATUS_400 }
-      end
-    rescue => _
-      { status: ResponseConstants::HTTP_STATUS_500 }
-    end
-  end
-
-  def editCompanyProfile(companyRegistParam, userId, session)
-    begin
+      userId = companyRegistParam[:user_id]
       regsiteredUser = User.where(_id: userId)
       # userの情報は事前にチェック
-      if regsiteredUser.length > 0 && !regsiteredUser[0].company_profile.nil? &&
+      if regsiteredUser.length > 0 &&
          UserService::preCheckEdit(companyRegistParam[:password], regsiteredUser[0].email, companyRegistParam[:email])
         updateUser = regsiteredUser[0]
         company = CompanyProfile.new(
@@ -66,25 +21,36 @@ module CompanyService
           detail: companyRegistParam[:detail]
         )
         # user情報の更新
+        authCategory = UserService::getAuthCategory(updateUser)
+        emailAuthSend = UserService::getEmailAuthSend(
+          regsiteredUser[0].email,
+          companyRegistParam[:email],
+          authCategory,
+          updateUser
+        )
         updateResult = UserService::updateCompanyUser(
           updateUser,
           companyRegistParam[:password],
-          companyRegistParam[:email],
+          emailAuthSend.nil? ? companyRegistParam[:email] : regsiteredUser[0].email,
           companyRegistParam[:image_file],
-          company
+          companyRegistParam[:image_file].nil? ? companyRegistParam[:image_url] : nil,
+          company,
+          emailAuthSend
         )
         if updateResult
           getCompanyResponse(
             userId,
             companyRegistParam[:company_name],
             updateUser.role,
-            updateUser.image_file_name.nil? ?
-              updateUser.image_url : GoogleCloudStorageUtil::getImageUrl(updateUser.image_file_name, nil),
+            UserService::getImageUrl(updateUser, nil),
             session,
             nil,
             nil,
             nil,
-            nil
+            nil,
+            false,
+            authCategory,
+            !emailAuthSend.nil?
           )
         else
           { status: ResponseConstants::HTTP_STATUS_400 }
@@ -92,8 +58,8 @@ module CompanyService
       else
         { status: ResponseConstants::HTTP_STATUS_400 }
       end
-    rescue => _
-      { status: ResponseConstants::HTTP_STATUS_500 }
+    rescue => e
+      ExceptionUtil::exceptionHandling(e, ResponseConstants::HTTP_STATUS_500)
     end
   end
 
@@ -106,7 +72,7 @@ module CompanyService
         data: {
           user_id: userId,
           email: selectuser[0].email,
-          image_url: selectuser[0].image_file_name.nil? ? selectuser[0].image_url : GoogleCloudStorageUtil::getImageUrl(selectuser[0].image_file_name, nil),
+          image_url: UserService::getImageUrl(selectuser[0], nil),
           company_name: company.company_name,
           category: company.category,
           prefecture_code: company.prefecture_code,
@@ -128,9 +94,7 @@ module CompanyService
         userId,
         company.company_name,
         selectuser[0].role,
-        selectuser[0].image_file_name.nil? ?
-          selectuser[0].image_url :
-          GoogleCloudStorageUtil::getImageUrl(selectuser[0].image_file_name, nil),
+        UserService::getImageUrl(selectuser[0], nil),
         nil,
         company.category,
         company.prefecture_code,
@@ -152,13 +116,15 @@ module CompanyService
     prefectureCode = nil,
     url = nil,
     detail = nil,
-    messageUnRead = false
+    messageUnRead = false,
+    authCategory = nil,
+    isEmailAuthSendFlg = false
   )
     # セッションが入っている場合、ユーザIDを入れる
     if !session.nil?
       session[:user_id] = userId
     end
-    { status: ResponseConstants::HTTP_STATUS_200,
+    { status: isEmailAuthSendFlg ? ResponseConstants::HTTP_STATUS_202 : ResponseConstants::HTTP_STATUS_200,
       data: {
         user_id: userId,
         company_name: companyName,
@@ -168,7 +134,8 @@ module CompanyService
         prefecture_code: prefectureCode,
         url: url,
         detail: detail,
-        message_un_read: messageUnRead
+        message_un_read: messageUnRead,
+        auth_category: authCategory
       }
     }
   end

@@ -12,6 +12,7 @@ class User
   field :password_digest, type: String
   embeds_one :student_profile
   embeds_one :company_profile
+  embeds_one :email_auth
   index({ email: 1 ,facebook_id: 1 }, unique: true)
   has_secure_password
   validates :status, inclusion: { in:

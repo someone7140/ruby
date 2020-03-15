@@ -27,8 +27,8 @@ module NewsService
       { status: ResponseConstants::HTTP_STATUS_200,
         data: result
       }
-    rescue => _
-      { status: ResponseConstants::HTTP_STATUS_500 }
+    rescue => e
+      ExceptionUtil::exceptionHandling(e, ResponseConstants::HTTP_STATUS_500)
     end
   end
 
@@ -45,7 +45,10 @@ module NewsService
     if !category.blank?
       url = url + "&category=" + category
     end
-    res = RestClient.get url, {'Ocp-Apim-Subscription-Key': NewsApiConstants::BING_NEWS_KEY}
+    res = RestClient.get url, {
+      'Ocp-Apim-Subscription-Key': NewsApiConstants::BING_NEWS_KEY,
+      'Accept-Language': 'ja-JP'
+    }
     resJson = JSON.parse(res)
     resJson["value"].map { |value|
       providerName = value["provider"].present? && value["provider"].length > 0 ? value["provider"][0]["name"] : "";

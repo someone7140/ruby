@@ -10,8 +10,8 @@ module MessageService
         result = UserService::getMessageUserInfo(resultMessageUsers)
       end
       { status: ResponseConstants::HTTP_STATUS_200, data: result }
-    rescue => _
-      { status: ResponseConstants::HTTP_STATUS_500 }
+    rescue => e
+      ExceptionUtil::exceptionHandling(e, ResponseConstants::HTTP_STATUS_500)
     end
   end
 
@@ -39,8 +39,8 @@ module MessageService
           message_records: messageRecords
         }}
       end
-    rescue => _
-      { status: ResponseConstants::HTTP_STATUS_500 }
+    rescue => e
+      ExceptionUtil::exceptionHandling(e, ResponseConstants::HTTP_STATUS_500)
     end
   end
  
@@ -83,8 +83,8 @@ module MessageService
         )
       end
       { status: ResponseConstants::HTTP_STATUS_200 }
-    rescue => _
-      { status: ResponseConstants::HTTP_STATUS_500 }
+    rescue => e
+      ExceptionUtil::exceptionHandling(e, ResponseConstants::HTTP_STATUS_500)
     end
   end
  
@@ -135,8 +135,8 @@ module MessageService
         }}
       )
       { status: ResponseConstants::HTTP_STATUS_200 }
-    rescue => _
-      { status: ResponseConstants::HTTP_STATUS_500 }
+    rescue => e
+      ExceptionUtil::exceptionHandling(e, ResponseConstants::HTTP_STATUS_500)
     end
   end
 
@@ -145,7 +145,8 @@ module MessageService
       getRecentMessage(userId, nil).filter{ |m|
         m[:un_read_flg]
       }.length > 0
-    rescue => _
+    rescue => e
+      ExceptionUtil::exceptionHandling(e, ResponseConstants::HTTP_STATUS_500)
       false
     end
   end

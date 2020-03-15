@@ -47,8 +47,8 @@ module CommentService
         end
       end
       { status: ResponseConstants::HTTP_STATUS_200 }
-    rescue => _
-      { status: ResponseConstants::HTTP_STATUS_400 }
+    rescue => e
+      ExceptionUtil::exceptionHandling(e, ResponseConstants::HTTP_STATUS_400)
     end
   end
 
@@ -60,8 +60,8 @@ module CommentService
         { "$pull" => { "comments" => { "user_id" => userId } } }
       )
       { status: ResponseConstants::HTTP_STATUS_200 }
-    rescue => _
-      { status: ResponseConstants::HTTP_STATUS_500 }
+    rescue => e
+      ExceptionUtil::exceptionHandling(e, ResponseConstants::HTTP_STATUS_500)
     end
   end
 
@@ -79,8 +79,8 @@ module CommentService
       else
         { status: ResponseConstants::HTTP_STATUS_200, data: nil }
       end
-    rescue => _
-      { status: ResponseConstants::HTTP_STATUS_500 }
+    rescue => e
+      ExceptionUtil::exceptionHandling(e, ResponseConstants::HTTP_STATUS_500)
     end
   end
 
@@ -109,8 +109,8 @@ module CommentService
       else
         { status: ResponseConstants::HTTP_STATUS_200, data: nil }
       end
-    rescue => _
-      { status: ResponseConstants::HTTP_STATUS_500 }
+    rescue => e
+      ExceptionUtil::exceptionHandling(e, ResponseConstants::HTTP_STATUS_500)
     end
   end
 
@@ -123,8 +123,8 @@ module CommentService
       else
         { status: ResponseConstants::HTTP_STATUS_200, data: [] }
       end
-    rescue => _
-      { status: ResponseConstants::HTTP_STATUS_500 }
+    rescue => e
+      ExceptionUtil::exceptionHandling(e, ResponseConstants::HTTP_STATUS_500)
     end
   end
  

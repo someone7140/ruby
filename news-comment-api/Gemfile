@@ -40,3 +40,6 @@ gem 'mongoid'
 gem 'bcrypt'
 gem "mongoid_rails_migrations"
 gem "google-cloud-storage"
+gem "sendgrid-ruby"
+gem "actionmailer"
+gem "secure_headers"

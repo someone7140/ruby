@@ -1,14 +1,16 @@
 module ResponseConstants
   HTTP_STATUS_200 = 200
+  HTTP_STATUS_202 = 202
   HTTP_STATUS_400 = 400
+  HTTP_STATUS_401 = 401
   HTTP_STATUS_403 = 403
   HTTP_STATUS_500 = 500
 end
 
 module NewsApiConstants
-  BING_NEWS_ENDPOINT = "https://api.cognitive.microsoft.com/bing/v7.0/news?freshness=Week&count=40"
-  BING_NEWS_SEARCH_ENDPOINT = "https://api.cognitive.microsoft.com/bing/v7.0/news/search?freshness=Week&count=40"
-  BING_NEWS_KEY = "api-key"
+  BING_NEWS_ENDPOINT = "https://api.cognitive.microsoft.com/bing/v7.0/news?freshness=Week&count=40&mkt=ja-JP"
+  BING_NEWS_SEARCH_ENDPOINT = "https://api.cognitive.microsoft.com/bing/v7.0/news/search?freshness=Week&count=40&mkt=ja-JP"
+  BING_NEWS_KEY = Rails.application.config.rankness.bingNewsKey
   CATEGORY = [
     { key: "Business", value: "ビジネス", enable: true },
     { key: "Entertainment", value: "芸能", enable: false },
@@ -22,9 +24,9 @@ module NewsApiConstants
 end
 
 module FacebookApiConstants
-  APP_ID = "ap_id"
-  VERSION = "v5.0"
-  SECRET = "secret"
+  APP_ID = Rails.application.config.rankness.facebookAppId
+  VERSION = "v6.0"
+  SECRET = Rails.application.config.rankness.facebookSecret
   TOKEN_CHECK_URL = "https://graph.facebook.com/" + VERSION + "/debug_token?access_token=" + APP_ID + "|" + SECRET + "&input_token="
 end
 
@@ -46,13 +48,26 @@ module UserConstants
   SCHOOL_CATEGORY_SENMON = "senmon"
 
   PREFECTURE_CODE_LIST = [*(1..47)]
+
+  AUTH_FACEBOOK = "facebook"
+  AUTH_EMAIL = "email"
+
+  MAIL_AUTH_PURPOSE_REGSITER = "register"
+  MAIL_AUTH_PURPOSE_CHANGE = "change"
+  MAIL_AUTH_PURPOSE_PASSWORD_RESET = "reset"
+
 end
 
 module GoogleCloudStorageConstants
-  PROJECT_ID = "test"
-  CREDENTIAL_PATH = "config/google_cloud_storage/test_key.json"
-  BUCKET = "test"
+  PROJECT_ID = Rails.application.config.rankness.gcsProjectId
+  CREDENTIAL_PATH = Rails.application.config.rankness.gcsCredentialPath
+  BUCKET = Rails.application.config.rankness.gcsBucket
   ICON_PATH = "icon/"
+end
+
+module MailConstants
+  SEND_GRID_FROM = Rails.application.config.rankness.sendGridFrom
+  MAIL_LINK_DOMAIN = Rails.application.config.rankness.mailLinkDomain
 end
 
 module MasterConstants

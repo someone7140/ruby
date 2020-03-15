@@ -1,15 +1,6 @@
 class StudentProfileController < ApplicationController
-  def registStudentProfile  
-    render json: StudentService::registerStudentProfile(studentRegistParam, session)
-  end
-
   def editStudentProfile
-    userId = session[:user_id]
-    if userId.blank?
-      render json: { status: ResponseConstants::HTTP_STATUS_403 }
-    else
-      render json: StudentService::editStudentProfile(studentRegistParam, userId, session)
-    end
+    render json: StudentService::editStudentProfile(studentRegistParam, session)
   end
 
   def getStudent

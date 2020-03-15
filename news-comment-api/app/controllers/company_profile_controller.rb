@@ -1,15 +1,6 @@
 class CompanyProfileController < ApplicationController
-  def registCompanyProfile
-    render json: CompanyService::registerCompanyProfile(companyRegistParam, session)
-  end
-
   def editCompanyProfile
-    userId = session[:user_id]
-    if userId.blank?
-      render json: { status: ResponseConstants::HTTP_STATUS_403 }
-    else
-      render json: CompanyService::editCompanyProfile(companyRegistParam, userId, session)
-    end
+    render json: CompanyService::editCompanyProfile(companyRegistParam, session)
   end
 
   def getCompany
