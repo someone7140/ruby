@@ -1,0 +1,12 @@
+development:
+  view_domain: "http://localhost:3001"
+  send_grid_api_key: "aaaaaas"
+  send_grid_from: "info@helcom_dev.co.jp"
+  mail_link_domain: "http://localhost:3001/frontend"
+  gcs_project_id: "toaruit-1302"
+  gcs_credential_path: "config/google_cloud_storage/storage-key-local.json"
+  gcs_bucket: "helcom_local"
+  gcs_icon_path: "icon/"
+  inquiry_mail_address: "aaaaaa@yahoo.co.jp"
+  firebase_project_id: "helcom-staging"
+  firebase_credential_path: "config/firebase/firebase-key-local.json"

@@ -1,0 +1,41 @@
+Metrics/AbcSize:
+  Enabled: true
+  Max: 100
+Metrics/CyclomaticComplexity:
+  Enabled: true
+  Max: 100
+Metrics/MethodLength:
+  Enabled: true
+  Max: 1000
+Metrics/PerceivedComplexity:
+  Enabled: true
+  Max: 100
+Metrics/ParameterLists:
+  Enabled: true
+  Max: 30
+Metrics/ClassLength:
+  Enabled: true
+  Max: 1000
+Metrics/BlockLength:
+  Enabled: true
+  Max: 100
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
+Style/AsciiComments:
+  Enabled: false
+Style/GuardClause:
+  Enabled: false
+Naming/AccessorMethodName:
+  Enabled: false
+Style/RescueStandardError:
+  Enabled: false
+AllCops:
+  NewCops: enable
