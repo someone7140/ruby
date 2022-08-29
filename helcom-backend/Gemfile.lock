@@ -237,7 +237,7 @@ GEM
     retriable (3.1.2)
     reverse_markdown (2.0.0)
       nokogiri
-    rexml (3.2.4)
+    rexml (3.2.5)
     rubocop (0.86.0)
       parallel (~> 1.10)
       parser (>= 2.7.0.1)
