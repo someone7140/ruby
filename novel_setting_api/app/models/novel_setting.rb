@@ -13,4 +13,9 @@ class NovelSetting
 
   index({ novel_id: 1 })
   index({ user_account_id: 1 })
+
+  def self.novel_setting_collection
+    db = Mongoid::Clients.default
+    db[:novel_settings]
+  end
 end

@@ -18,6 +18,11 @@ class NovelService
 
   # 小説のリスト取得
   def self.user_novel_list(user_account_id)
-    NovelRepository.user_novel_list(user_account_id)
+    NovelRepository.user_novel_list(user_account_id).map do |novel|
+      {
+        id: novel._id,
+        title: novel.title
+      }
+    end
   end
 end
