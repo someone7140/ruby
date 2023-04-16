@@ -11,6 +11,8 @@ class NovelController < ApplicationController
     auth_payload = session[:auth_payload]
     NovelService.create_novel(auth_payload['id'], params[:title])
     render status: :ok, json: {}
+  rescue InvalidParameterError => e
+    render status: :bad_request, json: { message: e }
   rescue StandardError => e
     render status: :internal_server_error, json: { message: e }
   end
@@ -23,6 +25,8 @@ class NovelController < ApplicationController
     auth_payload = session[:auth_payload]
     NovelService.update_novel_title(params[:id], auth_payload['id'], params[:title])
     render status: :ok, json: {}
+  rescue InvalidParameterError => e
+    render status: :bad_request, json: { message: e }
   rescue StandardError => e
     render status: :internal_server_error, json: { message: e }
   end
@@ -32,6 +36,8 @@ class NovelController < ApplicationController
     auth_payload = session[:auth_payload]
     novels = NovelService.user_novel_list(auth_payload['id'])
     render status: :ok, json: novels
+  rescue InvalidParameterError => e
+    render status: :bad_request, json: { message: e }
   rescue StandardError => e
     render status: :internal_server_error, json: { message: e }
   end
