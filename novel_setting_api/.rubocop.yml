@@ -1,0 +1,19 @@
+Layout/LineContinuationLeadingSpace:
+  Enabled: true
+Layout/LineContinuationSpacing:
+  Enabled: true
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: true  
+Layout/SpaceBeforeBrackets:
+  Enabled: true  
+Metrics/MethodLength:
+  Enabled: true
+  Max: 1000
+Style/RescueStandardError:
+  Enabled: false
+Gemspec/DeprecatedAttributeAssignment:
+  Enabled: true
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+Gemspec/RequireMFA:
+  Enabled: false
