@@ -6,12 +6,12 @@ class NovelSettingController < ApplicationController
 
   # 設定作成
   def create_setting
-    param! :novel_id, String, required: true, blank: false
+    param! :novelId, String, required: true, blank: false
     param! :name, String, required: true, blank: false
     param! :order, Integer, required: true
 
     auth_payload = session[:auth_payload]
-    NovelSettingService.create_setting(auth_payload['id'], params[:novel_id], params[:name], params[:order])
+    NovelSettingService.create_setting(auth_payload['id'], params[:novelId], params[:name], params[:order])
     render status: :ok, json: {}
   rescue InvalidParameterError => e
     render status: :bad_request, json: { message: e }
@@ -35,9 +35,25 @@ class NovelSettingController < ApplicationController
 
   # 設定リスト取得
   def setting_list
-    param! :novel_id, String, required: true, blank: false
+    param! :novelId, String, required: true, blank: false
 
-    render status: :ok, json: {}
+    auth_payload = session[:auth_payload]
+    result = NovelSettingService.setting_list(auth_payload['id'], params[:novelId])
+    render status: :ok, json: result
+  rescue InvalidParameterError => e
+    render status: :bad_request, json: { message: e }
+  rescue StandardError => e
+    render status: :internal_server_error, json: { message: e }
+  end
+
+  # ID指定で設定取得
+  def setting_by_id
+    param! :id, String, required: true, blank: false
+    param! :novelId, String, required: true, blank: false
+
+    auth_payload = session[:auth_payload]
+    result = NovelSettingService.setting_by_id(params[:id], auth_payload['id'], params[:novelId])
+    render status: :ok, json: result
   rescue InvalidParameterError => e
     render status: :bad_request, json: { message: e }
   rescue StandardError => e
