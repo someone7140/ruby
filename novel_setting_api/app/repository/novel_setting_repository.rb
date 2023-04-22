@@ -29,11 +29,11 @@ class NovelSettingRepository
 
   # 小説の設定リスト取得
   def self.setting_list(user_account_id, novel_id)
-    NovelSetting.where(user_account_id:, novel_id:).order_by(order: :asc).only(:_id, :name, :settings)
+    NovelSetting.only(:_id, :name, :settings).where(user_account_id:, novel_id:).order_by(order: :asc)
   end
 
   # 指定したidで小説の設定情報を取得
   def self.setting_by_id(id, user_account_id, novel_id)
-    NovelSetting.find_by(_id: id, user_account_id:, novel_id:).only(:_id, :name, :settings)
+    NovelSetting.only(:_id, :name, :settings).find_by(_id: id, user_account_id:, novel_id:).only(:_id, :name, :settings)
   end
 end

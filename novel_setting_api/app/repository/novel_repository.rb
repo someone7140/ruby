@@ -26,11 +26,11 @@ class NovelRepository
 
   # 小説のリスト取得
   def self.user_novel_list(user_account_id)
-    Novel.where(user_account_id:).only(:_id, :title)
+    Novel.only(:_id, :title).where(user_account_id:)
   end
 
   # 指定したidで小説の情報を取得
   def self.user_novel_by_id(id, user_account_id)
-    Novel.find_by(_id: id, user_account_id:).only(:_id, :title)
+    Novel.only(:_id, :title).find_by(_id: id, user_account_id:)
   end
 end
