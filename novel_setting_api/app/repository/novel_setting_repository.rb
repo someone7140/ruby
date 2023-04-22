@@ -34,6 +34,6 @@ class NovelSettingRepository
 
   # 指定したidで小説の設定情報を取得
   def self.setting_by_id(id, user_account_id, novel_id)
-    NovelSetting.only(:_id, :name, :settings).find_by(_id: id, user_account_id:, novel_id:).only(:_id, :name, :settings)
+    NovelSetting.only(:_id, :name, :settings).find_by(_id: id, user_account_id:, novel_id:)
   end
 end
