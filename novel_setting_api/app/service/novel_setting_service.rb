@@ -11,9 +11,14 @@ class NovelSettingService
     NovelSettingRepository.create_setting(id, user_account_id, novel_id, name, order)
   end
 
-  # 小説の設定名称作成
+  # 小説の設定名称更新
   def self.update_setting_name(id, user_account_id, name)
     NovelSettingRepository.update_setting_name(id, user_account_id, name)
+  end
+
+  # 小説の設定内容更新
+  def self.update_settings(id, user_account_id, settings)
+    NovelSettingRepository.update_settings(id, user_account_id, settings)
   end
 
   # 小説の設定リスト取得

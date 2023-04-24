@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'bson'
+
 # NovelSettingコレクションのリポジトリ
 class NovelSettingRepository
   # 設定作成
@@ -23,6 +25,24 @@ class NovelSettingRepository
       { '_id' => id, 'user_account_id' => user_account_id },
       { '$set' => {
         'name' => name
+      } }
+    )
+  end
+
+  # 設定内容更新
+  def self.update_settings(id, user_account_id, settings)
+    collection = NovelSetting.novel_setting_collection
+    setting_hash_list = settings.map do |setting|
+      setting_hash = {}
+      setting_hash['_id'] = setting[:id]
+      setting_hash['value'] = setting[:value]
+      setting_hash
+    end
+
+    collection.update_one(
+      { '_id' => id, 'user_account_id' => user_account_id },
+      { '$set' => {
+        'settings' => setting_hash_list
       } }
     )
   end

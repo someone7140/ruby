@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   get 'novel/setting/setting_by_id', to: 'novel_setting#setting_by_id'
   post 'novel/setting/create_novel', to: 'novel_setting#create_setting'
   post 'novel/setting/update_setting_name', to: 'novel_setting#update_setting_name'
+  post 'novel/setting/update_settings', to: 'novel_setting#update_settings'
 end

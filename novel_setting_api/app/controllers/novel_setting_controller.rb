@@ -33,6 +33,18 @@ class NovelSettingController < ApplicationController
     render status: :internal_server_error, json: { message: e }
   end
 
+  # 設定内容を更新
+  def update_settings
+    param! :id, String, required: true, blank: false
+    param! :settings, Array
+
+    auth_payload = session[:auth_payload]
+    NovelSettingService.update_settings(params[:id], auth_payload['id'], params[:settings])
+    render status: :ok, json: {}
+  rescue StandardError => e
+    render status: :internal_server_error, json: { message: e }
+  end
+
   # 設定リスト取得
   def setting_list
     param! :novelId, String, required: true, blank: false
