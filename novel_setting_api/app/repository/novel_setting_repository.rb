@@ -34,7 +34,7 @@ class NovelSettingRepository
     collection = NovelSetting.novel_setting_collection
     setting_hash_list = settings.map do |setting|
       setting_hash = {}
-      setting_hash['_id'] = setting[:id]
+      setting_hash['_id'] = setting[:_id]
       setting_hash['value'] = setting[:value]
       setting_hash
     end
