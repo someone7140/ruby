@@ -6,6 +6,8 @@ Layout/LineEndStringConcatenationIndentation:
   Enabled: true  
 Layout/SpaceBeforeBrackets:
   Enabled: true  
+Metrics/AbcSize:
+  Max: 100
 Metrics/MethodLength:
   Enabled: true
   Max: 1000

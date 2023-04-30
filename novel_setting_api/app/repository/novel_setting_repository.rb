@@ -31,11 +31,27 @@ class NovelSettingRepository
 
   # 設定内容更新
   def self.update_settings(id, user_account_id, settings)
+    # childrenの変数をhash化する
+    get_hash_children = lambda { |children|
+      if !children.nil? && children.length.positive?
+        children.map do |setting|
+          setting_hash = {}
+          setting_hash['_id'] = setting[:_id]
+          setting_hash['value'] = setting[:value]
+          setting_hash['children'] = get_hash_children.call(setting[:children])
+          setting_hash
+        end
+      else
+        []
+      end
+    }
+
     collection = NovelSetting.novel_setting_collection
     setting_hash_list = settings.map do |setting|
       setting_hash = {}
       setting_hash['_id'] = setting[:_id]
       setting_hash['value'] = setting[:value]
+      setting_hash['children'] = get_hash_children.call(setting[:children])
       setting_hash
     end
 
