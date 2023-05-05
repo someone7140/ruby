@@ -37,6 +37,7 @@ class NovelSettingRepository
         children.map do |setting|
           setting_hash = {}
           setting_hash['_id'] = setting[:_id]
+          setting_hash['name'] = setting[:name]
           setting_hash['value'] = setting[:value]
           setting_hash['children'] = get_hash_children.call(setting[:children])
           setting_hash
