@@ -1,3 +1,9 @@
+Gemspec/DeprecatedAttributeAssignment:
+  Enabled: true
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+Gemspec/RequireMFA:
+  Enabled: false
 Layout/LineContinuationLeadingSpace:
   Enabled: true
 Layout/LineContinuationSpacing:
@@ -6,16 +12,24 @@ Layout/LineEndStringConcatenationIndentation:
   Enabled: true  
 Layout/SpaceBeforeBrackets:
   Enabled: true  
+Lint/AmbiguousAssignment:
+  Enabled: true
+Lint/AmbiguousRange: 
+  Enabled: true
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: false
+Lint/ConstantOverwrittenInRescue: 
+  Enabled: true
+Lint/DeprecatedConstants: 
+  Enabled: true
+Lint/DuplicateBranch:
+  Enabled: true
+Lint/DuplicateMagicComment:
+  Enabled: true
 Metrics/AbcSize:
   Max: 100
 Metrics/MethodLength:
   Enabled: true
   Max: 1000
 Style/RescueStandardError:
-  Enabled: false
-Gemspec/DeprecatedAttributeAssignment:
-  Enabled: true
-Gemspec/DevelopmentDependencies:
-  Enabled: false
-Gemspec/RequireMFA:
   Enabled: false

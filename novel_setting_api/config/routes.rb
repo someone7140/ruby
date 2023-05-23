@@ -15,4 +15,7 @@ Rails.application.routes.draw do
   post 'novel/setting/create_novel', to: 'novel_setting#create_setting'
   post 'novel/setting/update_setting_name', to: 'novel_setting#update_setting_name'
   post 'novel/setting/update_settings', to: 'novel_setting#update_settings'
+  # novel_contents系のパス
+  post 'novel/contents/update_contents', to: 'novel_contents#update_contents'
+  get 'novel/contents/contents_by_novel_id', to: 'novel_contents#contents_by_novel_id'
 end

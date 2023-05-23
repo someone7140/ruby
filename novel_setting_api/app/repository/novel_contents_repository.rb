@@ -26,4 +26,9 @@ class NovelContentsRepository
       } }
     )
   end
+
+  # 小説IDによる内容の取得
+  def self.get_contents_by_novel_id(novel_id, user_account_id)
+    NovelContents.find_by(novel_id:, user_account_id:)
+  end
 end
