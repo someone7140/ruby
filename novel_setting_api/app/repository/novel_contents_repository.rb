@@ -17,7 +17,7 @@ class NovelContentsRepository
 
   # 小説内容の更新
   def self.update_novel_contents(id, user_account_id, content_records, content_headlines)
-    collection = NovelContents.novel_collection
+    collection = NovelContents.novel_contents_collection
     collection.update_one(
       { '_id' => id, 'user_account_id' => user_account_id },
       { '$set' => {

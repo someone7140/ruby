@@ -7,7 +7,22 @@ require 'securerandom'
 class NovelContentsService
   # 小説内容の更新
   def self.update_contents(id, user_account_id, content_records, content_headlines)
-    NovelContentsRepository.update_novel_contents(id, user_account_id, content_records, content_headlines)
+    content_record_hash_list = content_records.map do |record|
+      record_hash = {}
+      record_hash['type'] = record[:type]
+      record_hash['key'] = record[:key]
+      record_hash['children'] = [{ text: record[:children][0][:text] }]
+      record_hash
+    end
+    content_headline_hash_list = content_headlines.map do |headline|
+      headline_hash = {}
+      headline_hash['key'] = headline[:key]
+      headline_hash['name'] = headline[:name]
+      headline_hash
+    end
+
+    NovelContentsRepository.update_novel_contents(id, user_account_id, content_record_hash_list,
+                                                  content_headline_hash_list)
   end
 
   # 小説IDを指定して内容の取得

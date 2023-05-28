@@ -18,7 +18,30 @@ class NovelSettingService
 
   # 小説の設定内容更新
   def self.update_settings(id, user_account_id, settings)
-    NovelSettingRepository.update_settings(id, user_account_id, settings)
+    # childrenの変数をhash化する
+    get_hash_children = lambda { |children|
+      if !children.nil? && children.length.positive?
+        children.map do |setting|
+          setting_hash = {}
+          setting_hash['_id'] = setting[:_id]
+          setting_hash['name'] = setting[:name]
+          setting_hash['value'] = setting[:value]
+          setting_hash['children'] = get_hash_children.call(setting[:children])
+          setting_hash
+        end
+      else
+        []
+      end
+    }
+    setting_hash_list = settings.map do |setting|
+      setting_hash = {}
+      setting_hash['_id'] = setting[:_id]
+      setting_hash['value'] = setting[:value]
+      setting_hash['children'] = get_hash_children.call(setting[:children])
+      setting_hash
+    end
+
+    NovelSettingRepository.update_settings(id, user_account_id, setting_hash_list)
   end
 
   # 小説の設定リスト取得
