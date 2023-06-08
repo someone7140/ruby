@@ -28,4 +28,11 @@ class NovelService
       }
     end
   end
+
+  # 小説の削除
+  def self.delete_novel(id, user_account_id)
+    NovelContentsRepository.delete_novel_contents(id, user_account_id)
+    NovelSettingRepository.delete_novel_setting(id, user_account_id)
+    NovelRepository.delete_novel(id, user_account_id)
+  end
 end

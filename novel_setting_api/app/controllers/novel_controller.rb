@@ -41,4 +41,17 @@ class NovelController < ApplicationController
   rescue StandardError => e
     render status: :internal_server_error, json: { message: e }
   end
+
+  # 小説削除
+  def delete_novel
+    param! :id, String, required: true, blank: false
+
+    auth_payload = session[:auth_payload]
+    NovelService.delete_novel(params[:id], auth_payload['id'])
+    render status: :ok, json: {}
+  rescue InvalidParameterError => e
+    render status: :bad_request, json: { message: e }
+  rescue StandardError => e
+    render status: :internal_server_error, json: { message: e }
+  end
 end

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'novel/novel_list', to: 'novel#novel_list'
   post 'novel/create_novel', to: 'novel#create_novel'
   post 'novel/update_novel', to: 'novel#update_novel'
+  post 'novel/delete_novel', to: 'novel#delete_novel'
   # novel_setting系のパス
   get 'novel/setting/setting_list', to: 'novel_setting#setting_list'
   get 'novel/setting/setting_by_id', to: 'novel_setting#setting_by_id'

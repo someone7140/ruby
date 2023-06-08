@@ -33,4 +33,9 @@ class NovelRepository
   def self.user_novel_by_id(id, user_account_id)
     Novel.only(:_id, :title).find_by(_id: id, user_account_id:)
   end
+
+  # 小説設定の削除
+  def self.delete_novel(id, user_account_id)
+    Novel.where(_id: id, user_account_id:).delete
+  end
 end

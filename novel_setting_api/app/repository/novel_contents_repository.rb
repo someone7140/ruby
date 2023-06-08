@@ -31,4 +31,9 @@ class NovelContentsRepository
   def self.get_contents_by_novel_id(novel_id, user_account_id)
     NovelContents.find_by(novel_id:, user_account_id:)
   end
+
+  # 小説内容の削除
+  def self.delete_novel_contents(id, user_account_id)
+    NovelContents.where(_id: id, user_account_id:).delete
+  end
 end

@@ -49,4 +49,9 @@ class NovelSettingRepository
   def self.setting_by_id(id, user_account_id, novel_id)
     NovelSetting.only(:_id, :name, :settings).find_by(_id: id, user_account_id:, novel_id:)
   end
+
+  # 小説設定の削除
+  def self.delete_novel_setting(id, user_account_id)
+    NovelSetting.where(_id: id, user_account_id:).delete
+  end
 end
