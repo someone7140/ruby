@@ -81,6 +81,8 @@ GEM
     debug (1.7.1)
     declarative (0.0.20)
     diff-lcs (1.5.0)
+    dockerfile-rails (1.4.2)
+      rails
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -153,6 +155,8 @@ GEM
       net-protocol
     nio4r (2.5.8)
     nokogiri (1.14.2-x86_64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.14.2-x86_64-linux)
       racc (~> 1.4)
     os (1.1.4)
     parallel (1.22.1)
@@ -259,10 +263,12 @@ GEM
 
 PLATFORMS
   x86_64-darwin-22
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap
   debug
+  dockerfile-rails (>= 1.4)
   dotenv-rails
   google-apis-oauth2_v2
   googleauth
